@@ -9,11 +9,8 @@ import foolbox
 from boundary.evolutionary_attack import EvolutionaryAttack
 from boundary.evolutionary_attack_sample_test import EvolutionaryAttack as EvolutionaryAttack_sample_test
 from boundary.bapp import BoundaryAttackPlusPlus as bapp
-from boundary.qeba import BAPP_custom as qeba
-from boundary.score_attack import ScoreAttack
 from boundary.patch_attack import PatchAttack
 from new_foolbox_attacks.surfree_refinement import sf_refinement
-from cw_new import CarliniL2
 
 from boundary.sampling.sample_generator import SampleGenerator
 
@@ -24,7 +21,6 @@ import sys
 import os
 
 from new_composite_model import CompositeModel
-from model_train import pytorch_image_classification
 
 import copy
 import numpy as np
@@ -347,23 +343,7 @@ def main(arvg):
         from utils_mnist import store_adversarial, compute_MAD, read_images
 
 
-    attack_method_dict = {1:run_attack_fgsm, 
-                          2:run_attack_ifgsm, 
-                          3:run_attack_mifgsm, 
-                          4:run_attack_vr_mifgsm, 
-                          5:run_additive,
-                          8:run_attack_omnipotent_fgsm,
-                          14:run_attack_ada_ifgsm,
-                          31:run_attack_fgsm_reverse,
-                          32:run_attack_ifgsm_reverse,
-                          33:run_attack_gaussian_fgsm,
-                          34:run_attack_ifgsm_sgd,
-                          35:run_attack_cw,
-                          36:run_attack_ddn,
-                          37:run_attack_deepfool,
-                          38:run_attack_ead,
-                          40:run_attack_newton,
-                          41:run_attack_fmna,
+    attack_method_dict = {5:run_additive,
                           }
 
     #raw model表示还没有封装，可以给新的foolbox用的原始模型
