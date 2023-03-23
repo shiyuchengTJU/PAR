@@ -6,7 +6,6 @@ from struct import unpack
 from foolbox.criteria import Misclassification
 from straight_model.four_models_straight import create_fmodel_straight
 import foolbox
-import my_attacks
 from boundary.evolutionary_attack import EvolutionaryAttack
 from boundary.evolutionary_attack_sample_test import EvolutionaryAttack as EvolutionaryAttack_sample_test
 from boundary.bapp import BoundaryAttackPlusPlus as bapp
@@ -53,7 +52,7 @@ def hsja_refinement(model, image, label, hsja_max_query, hsja_starting_point):
     """
     attack = foolbox.attacks.HopSkipJumpAttack(model)
 
-    # attack = my_attacks.HopSkipJumpAttack(model)
+
 
     return attack(image, np.array(label), unpack=False, max_num_evals=1, iterations=int(hsja_max_query/26.0), initial_num_evals=1, starting_point=hsja_starting_point, log_every_n_steps=9999999, )
 
@@ -63,10 +62,7 @@ def run_additive(model, image, label, epsilons):
     attack = foolbox.attacks.AdditiveGaussianNoiseAttack(model, criterion)
     return attack(image, label, epsilons=epsilons, unpack=False)
 
-def run_additive_transformer(model, image, label, epsilons, mask):     #只保留transformer每个patch中心的噪声
-    criterion = foolbox.criteria.Misclassification()
-    attack = my_attacks.AdditiveGaussian_transformer_Attack(model, criterion)
-    return attack(image, label, epsilons=epsilons, unpack=False, mask=mask)
+
 
 #不同的噪声压缩方法
 def whey_refinement(image, temp_adv_img, model, label, total_access, first_access, doc_or_not=False, mode='untargeted'):   
@@ -368,7 +364,6 @@ def main(arvg):
                           38:run_attack_ead,
                           40:run_attack_newton,
                           41:run_attack_fmna,
-                          42:run_additive_transformer
                           }
 
     #raw model表示还没有封装，可以给新的foolbox用的原始模型
